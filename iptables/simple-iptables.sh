@@ -47,7 +47,27 @@ $IPT -A OUTPUT -p icmp --icmp-type 0 -m state --state ESTABLISHED,RELATED -j ACC
 # Allow SSH
 $IPT -A INPUT -j ACCEPT -p tcp --dport 22
 
+# Allow Mail (SMTP)
+$IPT -A INPUT -j ACCEPT -p tcp --dport 25
+
+# Allow Mail (dovecot)
+$IPT -A INPUT -j ACCEPT -p tcp --dport 143
+
+# Allow Mail (Submission)
+$IPT -A INPUT -j ACCEPT -p tcp --dport 587
+
+# Allow Nginx (HTTP)
+$IPT -A INPUT -j ACCEPT -p tcp --dport 80
+
+# Allow Nginx (HTTPS)
+$IPT -A INPUT -j ACCEPT -p tcp --dport 443
+
+# Allow Grafana
+$IPT -A INPUT -j ACCEPT -p tcp --dport 3000
+
 # Log everything else
 $IPT -A INPUT -j LOG
 $IPT -A FORWARD -j LOG
 $IPT -A INPUT -j DROP
+
+echo "...done."
